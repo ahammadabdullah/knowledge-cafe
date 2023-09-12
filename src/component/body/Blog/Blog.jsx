@@ -1,7 +1,7 @@
-const Blog = ({blog}) => {
+/* eslint-disable react/no-unknown-property */
+const Blog = ({blog, handleMarkAsRead, handleBookmark}) => {
     // eslint-disable-next-line react/prop-types
-    const {title, cover, author, author_img, posted_date, reading_time, hashtags } = blog;
-    console.log(hashtags);
+    const {id, title, cover, author, author_img, posted_date, reading_time, hashtags } = blog;
     return (
         <div className="space-y-8 border-b-2 mb-4 pb-4">
             <img className="w-full rounded-lg" src={cover} alt="" />
@@ -13,7 +13,12 @@ const Blog = ({blog}) => {
                         <p>{posted_date}</p>
                     </div>
                 </div>
-                <p>{reading_time} min read</p>
+                <div className="flex items-center space-x-2">
+                    <p>{reading_time} min</p>
+                    
+                    <button onClick={()=>handleBookmark(blog)}
+                    ><svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 3a2 2 0 012-2h6a2 2 0 012 2v12l-5-3-5 3V3z" clipRule="evenodd"></path></svg></button>
+                </div>
             </div>
             <h3 className="font-bold text-4xl">{title}</h3>
             <p>
@@ -21,7 +26,7 @@ const Blog = ({blog}) => {
                     hashtags.map((hashtag, idx) => <span key={idx}> #{hashtag}</span> )
                 }
             </p>
-            <p className="underline text-purple-700"><a href="">Mark as read</a></p>
+            <p onClick={() => handleMarkAsRead(id, reading_time)} className="cursor-pointer underline text-purple-700 w-fit">Mark as read</p>
         </div>
     );
 };
